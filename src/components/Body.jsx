@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import RestaurantCard from "./RestaurantCard"
+import RestaurantCard, {withVeg} from "./RestaurantCard"
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
-import useRestaurantsList from "../utils/useRestaurantsList";
+
 
 
 
@@ -19,6 +19,8 @@ const Body = ()=>{
     },
     [])
     
+    const RestaurantCardVeg = withVeg(RestaurantCard);
+
     const fetchData = async() => {
         const data = await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=26.7954364&lng=80.9276861&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING")
 
@@ -52,7 +54,9 @@ const Body = ()=>{
             </div>
             <div className='flex flex-wrap mx-24 gap-4'>
                 {filteredListOfRestaurants?.map((restaurant)=>(
-                   <Link to={"/restaurant/" + restaurant.info.id}  key={restaurant.info.id}> <RestaurantCard resData={restaurant}/> </Link>
+                    <Link to={"/restaurant/" + restaurant.info.id}  key={restaurant.info.id}>
+                        {restaurant.info?.veg ? <RestaurantCardVeg resData={restaurant}/> : <RestaurantCard resData={restaurant}/> }  
+                    </Link>
                 ))}
             </div>
         </div>
