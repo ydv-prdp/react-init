@@ -1,7 +1,9 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import RestaurantCard, {withVeg} from "./RestaurantCard"
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
+import UserContext from "../utils/UserContext";
+
 
 
 
@@ -12,7 +14,7 @@ const Body = ()=>{
     const [listOfRestaurants, setListOfRestaurants] = useState([]);
     const [filteredListOfRestaurants, setFilteredListOfRestaurants] = useState([]);
     const [searchInput, setSearchInput] = useState("");
-    
+    const {loggedInUser, setUserInfo} = useContext(UserContext);
     
     useEffect(()=>{
         fetchData();
@@ -40,6 +42,7 @@ const Body = ()=>{
                 }}>
                     TOP RATED RESTAURANTS
                 </button>
+                <input type="text" value={loggedInUser} onChange={(e)=>setUserInfo(e.target.value)}/>
             </div>
             <div className='flex items-center'>
                 <input type="text" className="" placeholder="Search" value={searchInput} onChange={(ev)=>setSearchInput(ev.target.value)} />

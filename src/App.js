@@ -1,4 +1,4 @@
-import React, {lazy, Suspense} from 'react';
+import React, {lazy, Suspense, useEffect, useState} from 'react';
 import ReactDOM  from 'react-dom/client';
 import Header from './components/Header';
 import Body from './components/Body';
@@ -7,6 +7,8 @@ import ContactUs from './components/ContactUs';
 import Error from './components/Error';
 import RestaurantMenu from './components/RestaurantMenu';
 import Shimmer from './components/Shimmer';
+import AboutClass from './components/AboutClass';
+import UserContext from './utils/UserContext';
 
 
 
@@ -15,11 +17,21 @@ import Shimmer from './components/Shimmer';
 const About = lazy(()=>import("./components/About"))
 
 const AppLayout = () => {
+    const [userInfo, setUserInfo] = useState();
+    useEffect(()=>{
+        const data = {
+            name:"pradeep yadav"
+        }
+        setUserInfo(data.name);
+    },[])
     return (
-        <div className='app'>
-            <Header/>
-            <Outlet/>
-        </div>
+        <UserContext.Provider value={{loggedInUser:userInfo, setUserInfo}}>
+            <div className='app'>
+                    <Header/>
+                <Outlet/>
+            </div>
+        </UserContext.Provider>
+        
     )
 }
 
@@ -36,6 +48,10 @@ const appRouter = createBrowserRouter([
             {
                 path:"/about",
                 element:<Suspense fallback={<h1><Shimmer/></h1>}><About/></Suspense>
+            },
+            {
+                path:"/aboutclass",
+                element:<AboutClass/>
             },
             {
                 path:"/contact",

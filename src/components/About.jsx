@@ -7,6 +7,7 @@ function About() {
     <div>
       <h1>About</h1>
       <User name="Pradeep React (function)"/>
+      <UserClass name="Pradeep React(class)"/>
     </div>
   )
 }

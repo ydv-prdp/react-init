@@ -1,5 +1,7 @@
 import React from "react";
 import User from "./User";
+import UserContext from "../utils/UserContext";
+
 
 class UserClass extends React.Component{
     constructor(props){
@@ -39,6 +41,7 @@ class UserClass extends React.Component{
                         count:this.state.count +   1
                         })
                 }}>Click to increment count</button>
+              
             </div>
         )
     }
