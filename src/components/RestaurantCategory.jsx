@@ -1,10 +1,16 @@
 import { useState } from "react"
 import { imageURL } from "../utils/constants";
+import { useDispatch } from "react-redux";
+import { addItem } from "../utils/cartSlice";
 
 
 function RestaurantCategory({category, showItems, setShowIndex}) {
+    const dispatch = useDispatch();
   const handleClick = () =>{
     setShowIndex();
+  }
+  const handleAddItem=(item)=>{
+    dispatch(addItem(item))
   }
   return (
     <div className="w-1/2 mx-auto my-4 bg-gray-50 shadow-lg p-4">
@@ -20,7 +26,10 @@ function RestaurantCategory({category, showItems, setShowIndex}) {
                         </div>
                         <div className="flex flex-col relative">
                             {item?.card?.info?.imageId && <img alt="menu item" className="" src={imageURL + item?.card?.info?.imageId}/>}
-                         {item?.card?.info?.imageId && <button className="py-2 px-2 bg-gray-700 w-1/2 rounded-full mx-auto text-white my-2 absolute top-[70%] left-14">
+                         {item?.card?.info?.imageId && 
+                         <button
+                            onClick={()=>handleAddItem(item)} 
+                            className="py-2 px-2 bg-gray-700 w-1/2 rounded-full mx-auto text-white my-2 absolute top-[70%] left-14">
                                 Add
                             </button> }   
                         </div>
